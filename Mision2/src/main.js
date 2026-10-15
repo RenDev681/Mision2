@@ -3,7 +3,7 @@
 let prefecturas = [];
 const lista = document.getElementById("lista");
 const estado = document.getElementById("estado");
-const busqueda = document.getElementById("busqueda");
+const buscador = document.getElementById("buscador");
 
 
 
@@ -53,8 +53,8 @@ obtenerPrefecturas();
         datos.length + " prefectura(s) encontrada(s)";
 
       datos.forEach(p => {
-        const tarjeta = document.createElement("article");
-        tarjeta.className = "tarjeta";
+        const casilla = document.createElement("article");
+        casilla.className = "casilla";
 
         const nombre = document.createElement("h2");
         nombre.className = "japones";
@@ -80,13 +80,13 @@ obtenerPrefecturas();
 
         detalle.style.whiteSpace = "pre-line";
 
-        tarjeta.append(nombre, romanizacion, detalle);
-        lista.appendChild(tarjeta);
+        casilla.append(nombre, romanizacion, detalle);
+        lista.appendChild(casilla);
       });
     }
 
-    busqueda.addEventListener("input", () => {
-      const texto = busqueda.value
+    buscador.addEventListener("input", () => {
+      const texto = buscador.value
         .trim()
         .toLocaleLowerCase();
 
@@ -117,7 +117,7 @@ obtenerPrefecturas();
           Math.random() * prefecturas.length
         );
 
-        busqueda.value = "";
+        buscador.value = "";
         mostrarPrefecturas([prefecturas[indice]]);
       });
 

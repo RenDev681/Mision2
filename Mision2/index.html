@@ -1,38 +1,29 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="style.css" rel="stylesheet" type="text/css">
-    <script defer src="src/main.js"></script>
-    <title>Prefecturas de Japón </title>
-</head>
-<body>
-<header>
-    <h1>🇯🇵 Explora Japón</h1>
-    <p>Descubre las 47 prefecturas japonesas</p>
-  </header>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="src/style.css" rel="stylesheet" type="text/css">
+        <script defer src="src/main.js"></script>
+        <title>Prefecturas de Japón </title>
+    </head>
+    <body>
+        <header>
+            <h1>Cátalogo de las prefecturas japonesas</h1>
+        </header>
 
-  <main>
-    <div class="controls">
-      <input
-        id="busqueda"
-        type="search"
-        placeholder="Busca Tokio, Osaka, Hokkaido..."
-        aria-label="Buscar prefectura"
-      >
+        <main>
+            <div class="controls">
+            <input id="buscador" type="search" placeholder="Busca una prefectura">
 
-      <button id="aleatoria">
-        Al azar
-      </button>
-    </div>
+            <button id="aleatoria">
+                Al azar
+            </button>
+            </div>
 
-    <p id="estado">Cargando prefecturas...</p>
-    <section id="lista"></section>
-  </main>
+            <p id="estado">Cargando prefecturas...</p>
+            <section id="lista"></section>
+        </main>
 
-  <footer>
-    Datos obtenidos de MyAPIs · Japón 🇯🇵
-  </footer>
-</body>
+    </body>
 </html>
