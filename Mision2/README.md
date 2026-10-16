@@ -3,10 +3,10 @@
 Misión M2 · Async Odyssey — Web Development I.
 
 ## Uso de IA
-Al inicio del trabajo necesite mucho la IA, porque quería usar unas API que se encontraban en Github y en una página que necesitaba claves, pero como al final no pude arreglarlo, y ChatGPT tampoco, acabé desistiendo y usando la API que estoy usando ahora. También la utilice para conseguir hacer el buscador
+Al inicio del trabajo necesite mucho la IA, porque quería usar unas API que se encontraban en Github y en una página que necesitaba claves, pero como al final no pude arreglarlo, y ChatGPT tampoco, acabé desistiendo y usando la API que estoy usando ahora. También la utilice para conseguir hacer el buscador y decorar el css puesto que me decia que el que tenía era poco legible
 
 ## Autopsía
-La página es buscador de cada prefectura de japón, en la cual, al entrar puedes ver el listado de las prefecturas. Con ellas puedes buscarlas, filtralas por región, ordenarlas con distintos parametros
+Esta página, al contrario que la de la misión 1, no tiene un flujo que tenga que seguir el usuario sí o sí, puesto que es una página que te informa sobre las distintas prefecturas de Japón, dándote información sobre la capital, población etc, permitiéndote que entres en ellas pinchando, y que te lleve a otra página la cual te pueda dar más información sobre ellas. Para ayudarte a buscar una, se da la oportunidad de ordenarla de distintas maneras, también puedes seleccionar solo las de una región del país en concreto. Y por si no sabes cual elegir, puedes darle al botón de la función aleatoria
 
 
 

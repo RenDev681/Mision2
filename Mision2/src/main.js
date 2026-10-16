@@ -1,186 +1,133 @@
+import "./style.css";
 
-//Variables
+import { obtenerPrefecturas } from "./api.js";
+
+import {
+    normalizarPrefecturas,
+    filtrarYOrdenar
+} from "./logic.js";
+
+import {
+    renderEstado,
+    renderPrefecturas
+} from "./render.js";
+
+const buscador = document.querySelector("#buscador");
+const selector = document.querySelector("#selector");
+const selectorRegion = document.querySelector("#selectorRegion");
+const botonModo = document.querySelector("#modo");
+const botonAleatorio = document.querySelector("#aleatorio");
+const botonReintentar = document.querySelector("#reintentar");
+
 let prefecturas = [];
-const lista = document.getElementById("lista");
-const estado = document.getElementById("estado");
-const buscador = document.getElementById("buscador");
-const selector = document.getElementById("selector");
-const selectorRegion = document.getElementById("selectorRegion");
-const botonModo = document.getElementById("modo");
 
-let enJapones = false;
+const estado = {
+    busqueda: "",
+    region: "Todas",
+    orden: "id",
+    enJapones: false,
+    idAleatorio: null
+};
 
-async function obtenerPrefecturas() {
-  try{
-    const respuesta = await fetch("https://apis-cloud.net/prefectures/all");
+// Aplica todos los controles usando el mismo estado.
+function actualizarVista() {
+    let resultados = filtrarYOrdenar(prefecturas, estado);
 
-    if (!respuesta.ok) {
-      throw new Error("Error al consultar la API");
+    if (estado.idAleatorio !== null) {
+        resultados = resultados.filter(
+            p => String(p.id) === String(estado.idAleatorio)
+        );
     }
 
-    const datos = await respuesta.json();
-    // Admite una lista directa o una lista dentro de data.
-    prefecturas = Array.isArray(datos)
-      ? datos
-      : datos.data;
-    if (!Array.isArray(prefecturas)) {
-      throw new Error("Formato de respuesta inesperado");
-    }
-
-    mostrarPrefecturas(prefecturas);
-  }catch (error){
-    estado.textContent = "No se pudieron cargar los datos. " + "Comprueba tu conexión e inténtalo de nuevo.";
-    console.error(error);
-  }
+    renderPrefecturas(resultados, estado.enJapones);
 }
 
-obtenerPrefecturas();
-
-
-
-//Ordenar por numero, alfabeticamente, población, tamaño, region
-//Dar la opcion de poner los nombres en japones o en romanji, pero con el kana siempre debajo
-//Filtrar por región 
-
-
-
-function mostrarPrefecturas(datos) {
-  lista.replaceChildren();
-
-  if(datos.length ==47 ){
-    estado.textContent = "";
-  }else{
-    estado.textContent = datos.length + " prefectura(s) encontrada(s)";
-  }
-
-  datos.forEach(p => {
-    const casilla = document.createElement("article");
-    casilla.className = "casilla";
-
-    const nombre = document.createElement("h2");
-    nombre.className = "japones";
-    if(enJapones){
-      nombre.textContent = p.name;
-      botonModo.textContent = "Cambiar a Romaji";
-    } else{
-      nombre.textContent = p.romaji;
-      botonModo.textContent = "Cambiar a Japones";
-    }
-
-    const hiragana = document.createElement("p");
-    hiragana.className = "kana";
-    hiragana.textContent = p.kana;
-
-    const detalle = document.createElement("p");
-    detalle.className = "detalle";
-    detalle.textContent =
-    "Capital: " + (p.capitalRomaji || p.capital || "—") +
-    `\n Región: ${enJapones ? p.region : convertirKanji(p.region)}` +
-    "\n Superficie: " +
-    (p.area != null
-    ? Number(p.area).toLocaleString("es-ES") + " km²"
-    : "—") +
-    "\n Población: " +
-    (p.population != null
-    ? Number(p.population).toLocaleString("es-ES")
-    : "—");
-
-    let direccion = `src/assets/backgrounds/${p.kana}.jpg`
-    casilla.style.backgroundImage = `url(${direccion})`;
-    console.log(casilla.style.backgroundImage);
-    console.log(getComputedStyle(casilla).backgroundImage)
-    detalle.style.whiteSpace = "pre-line";
-    casilla.append(nombre, hiragana, detalle);
-    lista.appendChild(casilla);
-  });
+// Al cambiar los filtros, dejamos de mostrar el resultado aleatorio.
+function limpiarAleatorio() {
+    estado.idAleatorio = null;
 }
 
+// Carga los datos desde la API.
+async function cargarPrefecturas() {
+    botonReintentar.hidden = true;
+    renderEstado("Cargando prefecturas…", "cargando");
+
+    document.querySelector("#lista").replaceChildren();
+
+    try {
+        const datos = await obtenerPrefecturas();
+
+        prefecturas = normalizarPrefecturas(datos);
+
+        if (prefecturas.length === 0) {
+            renderEstado("La API no ha devuelto prefecturas.");
+
+            const mensaje = document.createElement("p");
+            mensaje.className = "vacio";
+            mensaje.textContent = "No hay datos para mostrar.";
+
+            document.querySelector("#lista").append(mensaje);
+
+            return;
+        }
+
+        actualizarVista();
+    } catch {
+        renderEstado(
+            "No se pudieron cargar los datos. Comprueba tu conexión e inténtalo de nuevo.",
+            "error"
+        );
+
+        botonReintentar.hidden = false;
+    } finally {
+        document.querySelector("#estado")
+            .classList.remove("cargando");
+    }
+}
+
+// Búsqueda.
 buscador.addEventListener("input", () => {
-  const texto = buscador.value.trim().toLocaleLowerCase();
-
-  const filtradas = prefecturas.filter(p => [p.name, p.kana, p.romaji, p.capital, p.capitalRomaji, p.region].some(valor => String(valor || "").toLocaleLowerCase().includes(texto)));
-
-  mostrarPrefecturas(filtradas);
+    estado.busqueda = buscador.value;
+    limpiarAleatorio();
+    actualizarVista();
 });
 
-document.getElementById("aleatorio").addEventListener("click", () => {
-  if (prefecturas.length === 0) return;
-
-  const indice = Math.floor(Math.random() * prefecturas.length);
-
-  buscador.value = "";
-  mostrarPrefecturas([prefecturas[indice]]);
+// Orden.
+selector.addEventListener("change", () => {
+    estado.orden = selector.value;
+    limpiarAleatorio();
+    actualizarVista();
 });
 
- 
-selector.addEventListener("change", function(){
-  let selectedOption = this.selectedIndex;
-  ordenar(selectedOption);
+// Región.
+selectorRegion.addEventListener("change", () => {
+    estado.region = selectorRegion.value;
+    limpiarAleatorio();
+    actualizarVista();
 });
 
-function ordenar(selectedOption){
-
-  let ordenadas;
-
-  switch(selectedOption){
-    case 1:
-      ordenadas = prefecturas.toSorted((a,b) => b.population - a.population);
-      break;
-    case 2:
-      ordenadas = prefecturas.toSorted((a,b) => a.population - b.population);
-      break;
-    case 3:
-      ordenadas = prefecturas.toSorted((a,b) => b.area - a.area);
-      break;
-    case 4:
-      ordenadas = prefecturas.toSorted((a,b) => a.area - b.area);
-      break;
-    default:
-      ordenadas = prefecturas;
-      break;
-  }
-
-  mostrarPrefecturas(ordenadas);
-}
-
-selectorRegion.addEventListener("change", function(){
-  var selectedOption = this.options[this.selectedIndex];
-  console.log("Option selected: " + selectedOption.value);
-
-  let filtradas;
-  if(selectedOption.value == "Todas"){
-    filtradas = prefecturas;
-  }else{
-    filtradas = prefecturas.filter(p => convertirKanji(p.region) == selectedOption.value);
-  }
-
-  mostrarPrefecturas(filtradas);
+// Japonés o romaji.
+botonModo.addEventListener("click", () => {
+    estado.enJapones = !estado.enJapones;
+    actualizarVista();
 });
 
-botonModo.addEventListener("click", () => {enJapones=!enJapones; mostrarPrefecturas(prefecturas);});
+// Elige una prefectura al azar entre los resultados filtrados.
+botonAleatorio.addEventListener("click", () => {
+    const candidatos = filtrarYOrdenar(prefecturas, estado);
 
+    if (candidatos.length === 0) {
+        return;
+    }
 
+    const indice = Math.floor(Math.random() * candidatos.length);
+    estado.idAleatorio = candidatos[indice].id;
 
-function convertirKanji(kanji){
+    actualizarVista();
+});
 
-  switch(kanji){
-    case "北海道":
-      return "Hokkaido";
-    case "東北":
-      return "Tohoku";
-    case "関東":
-      return "Kanto";
-    case "中部":
-      return "Chubu";
-    case "近畿":
-      return "Kansai";
-    case "中国":
-      return "Chugoku";
-    case "四国":
-      return "Shikoku";
-    case "九州":
-      return "Kyushu";
-    case "沖縄":
-      return "Okinawa";
-  }
-}
+// Reintenta la petición a la API.
+botonReintentar.addEventListener("click", cargarPrefecturas);
+
+// Inicio de la aplicación.
+cargarPrefecturas();

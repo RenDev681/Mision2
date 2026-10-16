@@ -3,46 +3,46 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="src/style.css" rel="stylesheet" type="text/css">
-        <script defer src="src/main.js"></script>
+        <script type="module" src="/src/main.js"></script>
         <title>Prefecturas de Japón </title>
     </head>
     <body>
-        <header>
-            <h1>Cátalogo de las prefecturas japonesas</h1>
-        </header>
+        <div class="controls">
+            <input id="buscador" type="search" placeholder="Busca una prefectura">
 
-        <main>
-            <div class="controls">
-                <input id="buscador" type="search" placeholder="Busca una prefectura">
+            <button id="aleatorio" type="button">Al azar</button>
 
-                <button id="aleatorio">Al azar</button>
-                <select id="selector">
-                    <option>Por ID</option>
-                    <option>Habitantes descendente</option>
-                    <option>Habitantes ascendente</option>
-                    <option>Área descendente</option>
-                    <option>Área ascendente</option>
-                </select>
-                <select id="selectorRegion">
-                    <option>Todas</option>
-                    <option>Hokkaido</option>
-                    <option>Tohoku</option>
-                    <option>Kanto</option>
-                    <option>Chubu</option>
-                    <option>Kansai</option>
-                    <option>Chugoku</option>
-                    <option>Shikoku</option>
-                    <option>Kyushu</option>
-                    <option>Okinawa</option>
-                </select>
+            <select id="selector">
+                <option value="id">Por ID</option>
+                <option value="poblacionDesc">Habitantes descendente</option>
+                <option value="poblacionAsc">Habitantes ascendente</option>
+                <option value="areaDesc">Área descendente</option>
+                <option value="areaAsc">Área ascendente</option>
+            </select>
 
-                <button id="modo">Cambiar a Japones</button>
-            </div>
+            <select id="selectorRegion">
+                <option value="Todas">Todas</option>
+                <option value="Hokkaido">Hokkaido</option>
+                <option value="Tohoku">Tohoku</option>
+                <option value="Kanto">Kanto</option>
+                <option value="Chubu">Chubu</option>
+                <option value="Kansai">Kansai</option>
+                <option value="Chugoku">Chugoku</option>
+                <option value="Shikoku">Shikoku</option>
+                <option value="Kyushu">Kyushu</option>
+                <option value="Okinawa">Okinawa</option>
+            </select>
 
-            <p id="estado">Cargando prefecturas</p>
-            <section id="lista"></section>
-        </main>
+            <button id="modo" type="button">Cambiar a Japonés</button>
+        </div>
+
+        <p id="estado" role="status" aria-live="polite">Cargando prefecturas…</p>
+
+        <button id="reintentar" type="button" hidden>Reintentar</button>
+
+        <p id="resumen" aria-live="polite"></p>
+
+        <section id="lista" aria-label="Prefecturas"></section>
 
     </body>
 </html>

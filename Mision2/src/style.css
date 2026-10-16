@@ -1,23 +1,139 @@
 #lista {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 15%));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: 20px;
+    align-items: stretch;
 }
 
 .casilla {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    min-height: 300px;
     padding: 20px;
+    overflow: hidden;
+
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 12px;
+
+    background-color: #263442;
     background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
-    color: black;
-    -webkit-text-stroke: 0.5px white;
-    text-shadow: black;
+
+    color: #fff;
 }
 
-.casilla p{
-    font-size: 1em;
+.casilla::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.08) 0%,
+        rgba(0, 0, 0, 0.35) 35%,
+        rgba(0, 0, 0, 0.88) 100%
+    );
 }
 
-.casilla:hover{
-    transform: scale(1.05);
+
+.casilla h2 {
+    margin: 0 0 6px;
+    color: #fff;
+    font-size: 1.5rem;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.95);
+}
+
+
+.casilla .kana {
+    margin: 0 0 14px;
+    color: #ffe0a8;
+    font-size: 1rem;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.95);
+}
+
+.casilla .detalle {
+    margin: 0;
+    color: #fff;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 1);
+}
+
+.casilla:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 224, 168, 0.8);
+}
+
+.casilla.sin-imagen {
+    background-image: linear-gradient(135deg, #34495e, #17212b) !important;
+}
+
+#estado {
+    line-height: 1.5;
+}
+
+#estado.error {
+    color: #ffb4a9;
+}
+
+#estado.cargando {
+    color: #ffe0a8;
+}
+
+.vacio {
+    grid-column: 1 / -1;
+    padding: 28px 20px;
+    border: 1px dashed #788491;
+    border-radius: 12px;
+    color: #e5eaf0;
+    text-align: center;
+}
+
+button, input, select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:focus-visible, input:focus-visible, select:focus-visible {
+    outline: 2px solid #e9bd78;
+    outline-offset: 3px;
+}
+
+
+@media (max-width: 600px) {
+    #lista {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .casilla {
+        min-height: 280px;
+        padding: 18px;
+    }
+
+    .casilla h2 {
+        font-size: 1.35rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .casilla {
+        transition: none;
+    }
+
+    .casilla:hover {
+        transform: none;
+    }
 }
