@@ -6,6 +6,9 @@ const estado = document.getElementById("estado");
 const buscador = document.getElementById("buscador");
 const selector = document.getElementById("selector");
 const selectorRegion = document.getElementById("selectorRegion");
+const botonModo = document.getElementById("modo");
+
+let enJapones = false;
 
 async function obtenerPrefecturas() {
   try{
@@ -56,11 +59,17 @@ function mostrarPrefecturas(datos) {
 
     const nombre = document.createElement("h2");
     nombre.className = "japones";
-    nombre.textContent = p.name;
+    if(enJapones){
+      nombre.textContent = p.name;
+      botonModo.textContent = "Cambiar a Romaji";
+    } else{
+      nombre.textContent = p.romaji;
+      botonModo.textContent = "Cambiar a Japones";
+    }
 
     const romanizacion = document.createElement("p");
-    romanizacion.className = "romaji";
-    romanizacion.textContent = p.romaji;
+    romanizacion.className = "kana";
+    romanizacion.textContent = p.kana;
 
     const detalle = document.createElement("p");
     detalle.className = "detalle";
@@ -147,6 +156,7 @@ selectorRegion.addEventListener("change", function(){
   mostrarPrefecturas(filtradas);
 });
 
+botonModo.addEventListener("click", () => {enJapones=!enJapones; mostrarPrefecturas(prefecturas);});
 
 
 
