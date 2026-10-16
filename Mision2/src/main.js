@@ -85,7 +85,7 @@ function mostrarPrefecturas(datos) {
     ? Number(p.population).toLocaleString("es-ES")
     : "—");
 
-    let direccion = `src/assets/${p.kana}.jpg`
+    let direccion = `src/assets/backgrounds/${p.kana}.jpg`
     casilla.style.backgroundImage = `url(${direccion})`;
     console.log(casilla.style.backgroundImage);
     console.log(getComputedStyle(casilla).backgroundImage)
@@ -123,10 +123,6 @@ function ordenar(selectedOption){
   let ordenadas;
 
   switch(selectedOption){
-    case 0:
-      console.log("Por ID");
-      ordenadas = prefecturas;
-      break;
     case 1:
       ordenadas = prefecturas.toSorted((a,b) => b.population - a.population);
       break;
@@ -140,6 +136,7 @@ function ordenar(selectedOption){
       ordenadas = prefecturas.toSorted((a,b) => a.area - b.area);
       break;
     default:
+      ordenadas = prefecturas;
       break;
   }
 

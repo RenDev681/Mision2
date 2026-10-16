@@ -16,3 +16,5 @@ https://www.freecodecamp.org/espanol/news/ordenar-arreglos-en-javascript-como-us
 https://es.stackoverflow.com/questions/270697/añadir-background-image-desde-javascript
 https://es.stackoverflow.com/questions/270697/añadir-background-image-desde-javascript
 https://es.stackoverflow.com/questions/207660/cómo-hago-una-concatenación-de-variables-en-javascript
+https://kinsta.com/es/blog/contorno-texto-css/
+https://www.reddit.com/r/webdev/comments/18wvjpn/how_do_you_deal_with_increasing_size_on_hover/?tl=es-es
