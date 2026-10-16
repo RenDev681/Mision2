@@ -5,7 +5,7 @@ const lista = document.getElementById("lista");
 const estado = document.getElementById("estado");
 const buscador = document.getElementById("buscador");
 const selector = document.getElementById("selector");
-
+const selectorRegion = document.getElementById("selectorRegion");
 
 async function obtenerPrefecturas() {
   try{
@@ -44,7 +44,11 @@ obtenerPrefecturas();
 function mostrarPrefecturas(datos) {
   lista.replaceChildren();
 
-  estado.textContent = datos.length + " prefectura(s) encontrada(s)";
+  if(datos.length ==47 ){
+    estado.textContent = "";
+  }else{
+    estado.textContent = datos.length + " prefectura(s) encontrada(s)";
+  }
 
   datos.forEach(p => {
     const casilla = document.createElement("article");
@@ -98,8 +102,12 @@ document.getElementById("aleatorio").addEventListener("click", () => {
  
 selector.addEventListener("change", function(){
   let selectedOption = this.selectedIndex;
+  ordenar(selectedOption);
+});
+
+function ordenar(selectedOption){
+
   let ordenadas;
-  console.log("Option selected: " + selectedOption);
 
   switch(selectedOption){
     case 0:
@@ -107,16 +115,61 @@ selector.addEventListener("change", function(){
       ordenadas = prefecturas;
       break;
     case 1:
-      console.log("+-");
       ordenadas = prefecturas.toSorted((a,b) => b.population - a.population);
       break;
     case 2:
-      console.log("-+");
       ordenadas = prefecturas.toSorted((a,b) => a.population - b.population);
+      break;
+    case 3:
+      ordenadas = prefecturas.toSorted((a,b) => b.area - a.area);
+      break;
+    case 4:
+      ordenadas = prefecturas.toSorted((a,b) => a.area - b.area);
       break;
     default:
       break;
   }
 
   mostrarPrefecturas(ordenadas);
+}
+
+selectorRegion.addEventListener("change", function(){
+  var selectedOption = this.options[this.selectedIndex];
+  console.log("Option selected: " + selectedOption.value);
+
+  let filtradas;
+  if(selectedOption.value == "Todas"){
+    filtradas = prefecturas;
+  }else{
+    filtradas = prefecturas.filter(p => convertirKanji(p.region) == selectedOption.value);
+  }
+
+  mostrarPrefecturas(filtradas);
 });
+
+
+
+
+function convertirKanji(kanji){
+
+  switch(kanji){
+    case "北海道":
+      return "Hokkaido";
+    case "東北":
+      return "Tohoku";
+    case "関東":
+      return "Kansai";
+    case "中部":
+      return "Chubu";
+    case "近畿":
+      return "Kansai";
+    case "中国":
+      return "Chugoku";
+    case "四国":
+      return "Shikoku";
+    case "九州":
+      return "Kyushu";
+    case "沖縄":
+      return "Okinawa";
+  }
+}
