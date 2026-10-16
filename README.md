@@ -7,3 +7,8 @@ Al inicio del trabajo necesite mucho la IA, porque quería usar unas API que se 
 
 ## Autopsía
 La página es buscador de cada prefectura de japón, en la cual, al entrar puedes ver el listado de las prefecturas. Con ellas puedes buscarlas, filtralas por región, ordenarlas con distintos parametros
+
+
+
+https://dev4phones.wordpress.com/2023/01/10/como-detectar-cambios-de-seleccion-en-un-select-en-javascript/
+https://es.stackoverflow.com/questions/580853/cómo-ordenar-una-propiedad-de-un-array-dependiendo-otra-propiedad-en-js
