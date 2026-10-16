@@ -75,7 +75,7 @@ function mostrarPrefecturas(datos) {
     detalle.className = "detalle";
     detalle.textContent =
     "Capital: " + (p.capitalRomaji || p.capital || "—") +
-    "\n Región: " + (p.region || "—") +
+    `\n Región: ${enJapones ? p.region : convertirKanji(p.region)}` +
     "\n Superficie: " +
     (p.area != null
     ? Number(p.area).toLocaleString("es-ES") + " km²"

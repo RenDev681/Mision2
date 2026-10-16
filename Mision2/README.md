@@ -18,3 +18,4 @@ https://es.stackoverflow.com/questions/270697/añadir-background-image-desde-jav
 https://es.stackoverflow.com/questions/207660/cómo-hago-una-concatenación-de-variables-en-javascript
 https://kinsta.com/es/blog/contorno-texto-css/
 https://www.reddit.com/r/webdev/comments/18wvjpn/how_do_you_deal_with_increasing_size_on_hover/?tl=es-es
+https://es.stackoverflow.com/questions/441471/usar-if-dentro-de-un-template-literals-javascript
