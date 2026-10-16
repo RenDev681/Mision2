@@ -169,7 +169,7 @@ function convertirKanji(kanji){
     case "東北":
       return "Tohoku";
     case "関東":
-      return "Kansai";
+      return "Kanto";
     case "中部":
       return "Chubu";
     case "近畿":
