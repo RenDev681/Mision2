@@ -67,9 +67,9 @@ function mostrarPrefecturas(datos) {
       botonModo.textContent = "Cambiar a Japones";
     }
 
-    const romanizacion = document.createElement("p");
-    romanizacion.className = "kana";
-    romanizacion.textContent = p.kana;
+    const hiragana = document.createElement("p");
+    hiragana.className = "kana";
+    hiragana.textContent = p.kana;
 
     const detalle = document.createElement("p");
     detalle.className = "detalle";
@@ -85,8 +85,12 @@ function mostrarPrefecturas(datos) {
     ? Number(p.population).toLocaleString("es-ES")
     : "—");
 
+    let direccion = `src/assets/${p.kana}.jpg`
+    casilla.style.backgroundImage = `url(${direccion})`;
+    console.log(casilla.style.backgroundImage);
+    console.log(getComputedStyle(casilla).backgroundImage)
     detalle.style.whiteSpace = "pre-line";
-    casilla.append(nombre, romanizacion, detalle);
+    casilla.append(nombre, hiragana, detalle);
     lista.appendChild(casilla);
   });
 }

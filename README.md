@@ -13,3 +13,6 @@ La página es buscador de cada prefectura de japón, en la cual, al entrar puede
 https://dev4phones.wordpress.com/2023/01/10/como-detectar-cambios-de-seleccion-en-un-select-en-javascript/
 https://es.stackoverflow.com/questions/580853/cómo-ordenar-una-propiedad-de-un-array-dependiendo-otra-propiedad-en-js
 https://www.freecodecamp.org/espanol/news/ordenar-arreglos-en-javascript-como-usar-el-metodo-sort/
+https://es.stackoverflow.com/questions/270697/añadir-background-image-desde-javascript
+https://es.stackoverflow.com/questions/270697/añadir-background-image-desde-javascript
+https://es.stackoverflow.com/questions/207660/cómo-hago-una-concatenación-de-variables-en-javascript

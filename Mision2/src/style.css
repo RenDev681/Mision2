@@ -5,7 +5,9 @@
 }
 
 .casilla {
-    background: white;
     padding: 20px;
     border-radius: 12px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    
 }
